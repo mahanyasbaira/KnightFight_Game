@@ -1,82 +1,115 @@
-Knights of Legend: A Text-Based RPG
-Project Overview
-"Knights of Legend" is a text-based adventure game developed as a practical project. It re-imagines the classic "Knight Fight" game, offering players an immersive experience through managing knights, engaging in combat with monsters, and leveraging the power of fortunes. The game emphasizes modular design, using abstract classes and interfaces to ensure extensibility and maintainability.
+🛡️ Knights of Legend: A Text-Based RPG
 
-Key Features
-File Reading and Saving: The game's data, including knights, monsters, and fortunes, is loaded from CSV files at startup. Players can also save their progress to a specified file.
 
-Knights: Players manage a roster of knights, each with unique attributes (health, armor, hit modifier, damage die, experience points). Up to four knights can be active on a quest at any given time.
 
-Fortunes / Bonus Cards: Before embarking on a quest, active knights draw random "fortune" cards. These cards provide temporary bonuses or penalties to a knight's attributes, adding a layer of strategy and unpredictability to encounters.
+🎮 Overview
+Knights of Legend is a re-imagined, text-based RPG inspired by the classic Knight Fight game. It places you in command of a team of knights as they battle monsters, wield mystical fortunes, and level up through rich, strategic combat.
 
-MOBs / Monsters: Knights face various monsters in random encounters. The number of monsters encountered scales with the number of active knights.
+This Java console-based game focuses on clean architecture and modular design using interfaces and abstract classes—built for extensibility, testability, and maintainability.
 
-Team Management: Outside of quests, players can view detailed information about each knight and manage their active party. Defeated knights return to the general pool and are healed.
+🗝️ Key Features
+📂 File Loading & Saving: Load knights, monsters, and fortunes from CSV files. Save progress between sessions.
 
-Text-Based Interface: The entire game interaction occurs through the console (System.in/System.out), but its design allows for easy integration with different user interfaces in the future.
+🛡️ Knight Management: Control up to 4 active knights at a time, each with unique combat stats and experience growth.
 
-Game Mechanics Highlights
-Attributes
-Core combat statistics are defined by the Attributes interface, including armor, maxHP, damageDie, and hitModifier [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/Attributes.html].
+🔮 Fortunes: Bonus cards that provide strategic buffs (or nerfs!) before each quest.
 
-Dice Types
-Damage and hit calculations utilize various dice types (D4, D6, D8, D10, D12, D20), managed by the DiceType enumeration and DiceSet class [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/src/DiceType.java, mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/DiceType.html, mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/DiceSet.html].
+👹 Monster Encounters: Random battles scale with your active party size.
 
-Combat System
-Combat involves a D20 roll plus a hit modifier against an opponent's armor to determine a hit, followed by a damage die roll to calculate damage [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/CombatEngine.html]. Knights gain XP upon defeating monsters [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/CombatEngine.html].
+🧙 Strategic Combat: Classic RPG dice-based mechanics with customizable D4–D20 rolls.
 
-Project Structure and Design
-The game's architecture follows an object-oriented approach, utilizing interfaces and abstract classes for a flexible design. Key components include:
+🧑‍🤝‍🧑 Team Management: Swap, inspect, or heal knights between quests.
 
-DiceType: An enumeration for different dice used in the game [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/src/DiceType.java].
+📜 Console UI: Text-based input/output via System.in and System.out.
 
-Attributes: An interface defining core combat attributes [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/src/Attributes.java].
+⚔️ Game Mechanics
+🎲 Attributes & Dice Rolls
+Core Stats: armor, maxHP, hitModifier, and damageDie as defined in the Attributes interface.
 
-Fortune: Represents bonus cards that modify attributes [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/src/Fortune.java].
+Dice Types: Handled by DiceType enum and DiceSet utility, ranging from D4 to D20.
 
-MOB: The base class for all "mobile objects" (monsters and knights), implementing Attributes [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/src/MOB.java].
+🧠 Combat Logic
+Hit Roll: D20 + hitModifier ≥ armor → Hit!
 
-Knight: Extends MOB and represents playable characters, including XP and active fortunes [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/src/Knight.java].
+Damage: Roll damageDie to determine damage output.
 
-GameData: An abstract class for managing game data (knights, monsters, fortunes), with CSVGameData providing a concrete implementation for CSV file handling [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/GameData.html, mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/CSVGameData.html].
+XP System: Knights earn experience for each monster defeated.
 
-GameView: An interface for handling user input and output, with ConsoleView providing a text-based implementation [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/GameView.html, mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/ConsoleView.html].
+All logic is handled by the CombatEngine.
 
-CombatEngine: Manages the combat logic between knights and monsters [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/CombatEngine.html].
+🧱 Project Architecture
+bash
+Copy
+Edit
+📁 src/
+├── CombatEngine.java       # Battle logic
+├── ConsoleView.java        # Console input/output
+├── DiceType.java           # Dice enumeration
+├── DiceSet.java            # Dice handling
+├── Knight.java             # Knight class
+├── MOB.java                # Base class for Knights & Monsters
+├── Fortune.java            # Fortune card logic
+├── GameController.java     # Central orchestrator
+├── GameData.java           # Abstract data loader
+├── CSVGameData.java        # Concrete implementation
+└── Main.java               # Entry point
+Modular components rely heavily on interfaces and abstract classes to ensure loose coupling and clean separation of concerns.
 
-GameController: The central orchestrator, connecting GameData, GameView, and CombatEngine [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/GameController.html].
+🚀 How to Run
+Compile and run from the command line:
 
-Main: The entry point of the application, responsible for parsing command-line arguments and initializing the game components [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/Main.html].
+bash
+Copy
+Edit
+# Compile all source files
+javac src/*.java
 
-The class relationships are further detailed in the project's UML diagrams [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/uml.md].
-
-How to Run
-To run the game, compile the Java source files and execute the Main class.
-
-Default Execution:
-The game will load gamedata.csv and knights.csv by default [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/Main.html].
-
+# Run the game with default files
 java Main
+You can also provide custom data/save files:
 
-Custom Data and Save Files:
-You can specify custom data and save files using command-line arguments:
+bash
+Copy
+Edit
+java Main --data=gamedata.csv mysave.csv
+📚 Class Highlights
+Component	Description
+Attributes	Interface defining base combat stats
+DiceType	Enum for dice types (D4, D6, ..., D20)
+Knight	Playable character class
+MOB	Base class for knights and monsters
+Fortune	Temporary combat buffs/debuffs
+GameView	Input/output abstraction
+CombatEngine	Manages combat logic
+GameController	Connects data, view, and engine
+Main	Starts the application
 
-java Main --data={data_filename.csv} {save_filename.csv}
+See full class structure in the UML Diagram.
 
---data={data_filename.csv}: Specifies the game data file containing MOBs and Fortunes [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/Main.html].
+🎓 Academic Context
+This project was developed as part of a practical exercise in:
 
-{save_filename.csv}: Specifies the file for loading and saving knight progress [cite: mahanyasbaira/knightfight_game/KnightFight_Game-3898f19c1afe331c3c6c393631d82461a1e8b4b8/docs/Main.html].
+Object-Oriented Design (OOD)
 
-For example:
+Interface-based architecture
 
-java Main --data=gamedata.csv mygame.csv
+Java console applications
 
-Academic Context
-This project serves as a comprehensive exercise in object-oriented programming, design patterns (like polymorphism), and software architecture. It encourages students to break down a large problem into smaller, manageable components, test frequently, and build incrementally. The separation of concerns (e.g., GameData for data, GameView for presentation, CombatEngine for logic) is a key learning objective.
+CSV data parsing and serialization
 
-Future Enhancements (Stretch Goals)
-Inventory System: Implement inventory items with their own attributes that provide bonuses to knights.
+Combat simulation and game loop logic
 
-Choose Your Own Adventure: Integrate a branching narrative system to influence quests and outcomes.
+It's an educational foundation for learning clean code, testability, and modular design in real-world software development.
 
-Graphical User Interface (GUI): Replace the console-based GameView with a graphical interface.
+🌟 Future Enhancements
+🧳 Inventory System: Equip items with buffs or stats.
+
+🗺️ Choose-Your-Adventure Quests: Add story branching.
+
+🖼️ Graphical UI: Plug in a JavaFX or Swing interface.
+
+🎭 Enemy AI: Smarter, adaptive monsters.
+
+🤝 Contributors
+Developed by @mahanyasbaira
+Colorado State University · CS 164: Object-Oriented Programming
